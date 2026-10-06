@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI Builder 免費學院｜AI Coding × Financial AI Agent</title>
+<meta name="description" content="以公開課綱能力架構為參考，重組成免費、可實作的 AI Coding 與金融 AI Agent 學習平台。" />
+<style>
+  :root{
+    --bg:#f5f7fb; --card:#ffffff; --text:#172033; --muted:#667085; --line:#e6eaf0;
+    --brand:#5b5bd6; --brand2:#7a5af8; --ok:#12b76a; --warn:#f79009; --danger:#f04438;
+    --sidebar:#101828; --sidebar2:#1d2939; --chip:#f2f4f7; --shadow:0 10px 30px rgba(16,24,40,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}
+  a{color:inherit}
+  button,input,textarea{font:inherit}
+  .app{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+  aside{background:linear-gradient(180deg,var(--sidebar),var(--sidebar2));color:#fff;padding:26px 18px;position:sticky;top:0;height:100vh;overflow:auto}
+  .brand{display:flex;gap:12px;align-items:center;margin-bottom:24px}
+  .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#9b8afb,#5b5bd6);display:grid;place-items:center;font-weight:900;box-shadow:0 8px 20px rgba(91,91,214,.35)}
+  .brand h1{font-size:17px;margin:0}.brand p{margin:3px 0 0;color:#cbd5e1;font-size:12px}
+  .sidecard{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px;margin-bottom:14px}
+  .sidecard strong{font-size:13px}.sidecard small{color:#cbd5e1;display:block;margin-top:5px;line-height:1.5}
+  .progress-shell{height:8px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden;margin-top:10px}
+  .progress-bar{height:100%;background:linear-gradient(90deg,#7f56d9,#b692f6);width:0%;transition:.25s}
+  .nav-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#98a2b3;margin:22px 8px 8px}
+  .navbtn{width:100%;border:0;background:transparent;color:#e4e7ec;padding:10px 12px;text-align:left;border-radius:10px;cursor:pointer;display:flex;gap:10px;align-items:center}
+  .navbtn:hover,.navbtn.active{background:rgba(255,255,255,.09);color:#fff}.navbtn span:last-child{font-size:14px}
+  main{padding:30px;max-width:1450px;width:100%}
+  .hero{background:linear-gradient(135deg,#ffffff 0%,#f3f0ff 55%,#eef4ff 100%);border:1px solid #ebe9fe;border-radius:24px;padding:30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .hero:after{content:"";position:absolute;width:270px;height:270px;border-radius:50%;background:rgba(122,90,248,.08);right:-80px;top:-90px}
+  .eyebrow{font-size:12px;font-weight:800;color:var(--brand);letter-spacing:.08em;text-transform:uppercase}
+  .hero h2{font-size:34px;line-height:1.15;margin:8px 0 12px;max-width:850px}.hero p{max-width:900px;color:var(--muted);line-height:1.75;margin:0}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+  .btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}.btn:hover{transform:translateY(-1px)}
+  .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}
+  .metric{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+  .metric b{font-size:25px}.metric span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+  .section{margin-top:26px}.section-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:14px}
+  .section h3{font-size:22px;margin:0}.section-head p{margin:4px 0 0;color:var(--muted);font-size:14px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}.tab{border:1px solid var(--line);background:#fff;padding:8px 11px;border-radius:999px;cursor:pointer;font-size:13px}.tab.active{background:#ede9fe;border-color:#c7b9ff;color:#4a3fb0;font-weight:800}
+  .lesson-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .lesson{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 4px 16px rgba(16,24,40,.04)}
+  .lesson-top{padding:18px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:flex-start;cursor:pointer}
+  .num{width:34px;height:34px;border-radius:10px;background:#f4f3ff;color:#5b5bd6;display:grid;place-items:center;font-weight:900;font-size:13px}
+  .lesson h4{margin:0 0 6px;font-size:17px}.lesson .sub{color:var(--muted);font-size:13px;line-height:1.5}
+  .check{width:23px;height:23px;accent-color:var(--brand);cursor:pointer;margin-top:4px}
+  .lesson-body{display:none;border-top:1px solid var(--line);padding:18px;background:#fcfcfd}.lesson.open .lesson-body{display:block}
+  .badge-row{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 14px}.badge{background:var(--chip);border:1px solid #eaecf0;color:#475467;border-radius:999px;padding:5px 8px;font-size:11px;font-weight:700}.badge.free{background:#ecfdf3;color:#027a48;border-color:#abefc6}.badge.official{background:#eff8ff;color:#175cd3;border-color:#b2ddff}.badge.video{background:#fff4ed;color:#b93815;border-color:#f9dbaf}
+  .body-block{margin:14px 0}.body-block h5{margin:0 0 7px;font-size:13px}.body-block p,.body-block li{font-size:13px;line-height:1.65;color:#475467}.body-block ul{padding-left:20px;margin:6px 0}
+  .resources{display:grid;gap:8px}.resource{display:flex;justify-content:space-between;gap:14px;align-items:center;border:1px solid var(--line);background:#fff;padding:10px 11px;border-radius:10px;text-decoration:none}.resource:hover{border-color:#bdb4fe}.resource b{font-size:13px}.resource small{display:block;color:var(--muted);margin-top:2px}.resource em{font-style:normal;color:var(--brand);font-size:12px;font-weight:800;white-space:nowrap}
+  .prompt{background:#101828;color:#e4e7ec;border-radius:12px;padding:12px 14px;font-size:12px;line-height:1.65;position:relative;white-space:pre-wrap}.copy{position:absolute;right:8px;top:8px;border:1px solid #344054;background:#1d2939;color:#fff;border-radius:7px;padding:5px 8px;cursor:pointer;font-size:11px}
+  .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.week{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}.week strong{font-size:14px}.week p{font-size:12px;line-height:1.55;color:var(--muted);margin:6px 0 0}
+  .decision{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.panel h4{margin:0 0 8px}.panel p,.panel li{font-size:13px;line-height:1.65;color:#475467}
+  .score{display:flex;align-items:center;gap:8px;margin:10px 0}.score .dots{display:flex;gap:4px}.dot{width:12px;height:12px;border-radius:50%;background:#d0d5dd}.dot.on{background:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:12px;padding:12px;resize:vertical;background:#fff;color:var(--text)}
+  .savehint{font-size:12px;color:var(--muted);margin-top:6px}
+  .footer{font-size:12px;color:#98a2b3;margin:28px 0 6px;line-height:1.6}
+  .hide{display:none!important}
+  .search{width:100%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#fff;padding:10px 12px;border-radius:10px;outline:none}.search::placeholder{color:#98a2b3}
+  @media(max-width:1000px){.app{grid-template-columns:1fr}aside{position:relative;height:auto}.lesson-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:repeat(2,1fr)}.roadmap{grid-template-columns:repeat(2,1fr)}.decision{grid-template-columns:1fr}main{padding:18px}.hero h2{font-size:28px}}
+  @media(max-width:600px){.summary-grid,.roadmap{grid-template-columns:1fr}.hero{padding:22px}.hero h2{font-size:25px}.section-head{align-items:flex-start;flex-direction:column}.lesson-top{grid-template-columns:auto 1fr}.check{grid-column:2;justify-self:end;margin-top:-32px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><div class="logo">AI</div><div><h1>AI Builder 免費學院</h1><p>AI Coding × Financial AI Agent</p></div></div>
+  <div class="sidecard">
+    <strong>整體進度 <span id="progressText" style="float:right">0%</span></strong>
+    <div class="progress-shell"><div id="progressBar" class="progress-bar"></div></div>
+    <small>進度會存在你的瀏覽器 localStorage，關掉 HTML 再打開也會保留。</small>
+  </div>
+  <input class="search" id="search" placeholder="搜尋課程、API、Skills…" />
+  <div class="nav-title">開始</div>
+  <button class="navbtn active" data-scroll="top"><span>⌂</span><span>課程總覽</span></button>
+  <button class="navbtn" data-scroll="roadmap"><span>◷</span><span>30 天學習路線</span></button>
+  <div class="nav-title">學習軌</div>
+  <button class="navbtn" data-filter="coding"><span>⌘</span><span>AI Coding</span></button>
+  <button class="navbtn" data-filter="agent"><span>◇</span><span>Financial AI Agent</span></button>
+  <button class="navbtn" data-filter="capstone"><span>★</span><span>作品集實戰</span></button>
+  <div class="nav-title">工具</div>
+  <button class="navbtn" data-scroll="decision"><span>?</span><span>要不要買付費課？</span></button>
+  <button class="navbtn" data-scroll="notes"><span>✎</span><span>我的筆記</span></button>
+</aside>
+
+<main id="top">
+  <section class="hero">
+    <div class="eyebrow">Free Learning Path · 2026</div>
+    <h2>先用免費資源，把「AI Coding + 金融 AI Agent」真的做一遍</h2>
+    <p>這不是付費課內容搬運版，而是參考兩門課程公開描述的能力範圍，重新用 Anthropic、GitHub、MDN、Next.js、Supabase、SEC、FinMind、FRED 等免費/官方資源組成一條可實作的學習路徑。目標是：你可以自己做出一個 Financial Intelligence Agent，再決定還要不要買課。</p>
+    <div class="hero-actions">
+      <button class="btn primary" onclick="document.getElementById('courses').scrollIntoView()">開始上課</button>
+      <a class="btn" href="https://anthropic.skilljar.com/claude-code-in-action" target="_blank" rel="noopener">Anthropic 免費 Claude Code 課</a>
+      <button class="btn" onclick="resetProgress()">重設進度</button>
+    </div>
+  </section>
+
+  <div class="summary-grid">
+    <div class="metric"><b id="lessonCount">18</b><span>堂可實作課程</span></div>
+    <div class="metric"><b>0 元起</b><span>以官方免費資源為主</span></div>
+    <div class="metric"><b>30 天</b><span>建議完成第一輪</span></div>
+    <div class="metric"><b>1 個</b><span>可放作品集的最終專案</span></div>
+  </div>
+
+  <section class="section" id="roadmap">
+    <div class="section-head"><div><h3>30 天學習路線</h3><p>不要一次把所有文件看完；每週都要做出能運作的東西。</p></div></div>
+    <div class="roadmap">
+      <div class="week"><strong>Week 1｜能讓 AI 幫你做程式</strong><p>Claude Code、GitHub、HTML/JS 基礎。完成一個本機單頁工具。</p></div>
+      <div class="week"><strong>Week 2｜能把資料存起來</strong><p>Next.js、Supabase、API 與環境變數。完成登入＋資料庫。</p></div>
+      <div class="week"><strong>Week 3｜能做金融 Agent</strong><p>Skills、Memory、SEC / FinMind / FRED。完成公司研究流程。</p></div>
+      <div class="week"><strong>Week 4｜能自動跑、能展示</strong><p>監控、測試、報告輸出、部署。完成 Financial Intelligence Agent MVP。</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="courses">
+    <div class="section-head">
+      <div><h3>課程內容</h3><p>點開每堂課看資源、作業與可直接丟給 Claude Code 的練習提示。</p></div>
+      <div class="tabs"><button class="tab active" data-tab="all">全部</button><button class="tab" data-tab="coding">AI Coding</button><button class="tab" data-tab="agent">AI Agent</button><button class="tab" data-tab="capstone">作品集</button></div>
+    </div>
+    <div class="lesson-grid" id="lessonGrid"></div>
+  </section>
+
+  <section class="section" id="decision">
+    <div class="section-head"><div><h3>做完再決定要不要買付費課</h3><p>免費資源可以學到技術；付費課主要買的是「整理、範本、中文脈絡、陪跑與省時間」。</p></div></div>
+    <div class="decision">
+      <div class="panel">
+        <h4>免費替代能力：我的判斷</h4>
+        <div class="score"><b>AI Coding 技能覆蓋</b><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span></div><small>約 80–90%</small></div>
+        <div class="score"><b>Financial Agent 技能覆蓋</b><div class="dots"><span class="dot on"></span><span class="dot on"></span><span class="dot on"></span><span class="dot"></span><span class="dot"></span></div><small>約 70–85%</small></div>
+        <p>差距通常不是「免費資源沒有」，而是你要自己決定資料源、串接順序、錯誤處理、金融分析框架與作業難度。付費課的價值主要在替你排好路線，並提供講師自己的模板或 Skills。</p>
+      </div>
+      <div class="panel">
+        <h4>完成這 4 件事後再買</h4>
+        <ol>
+          <li>能用 Claude Code 從需求建立一個小工具。</li>
+          <li>能串至少一個 API，並把 key 放進環境變數。</li>
+          <li>能寫一個自己的 Skill，要求輸出固定分析格式與資料來源。</li>
+          <li>能完成 SEC / FinMind / FRED 任一資料源的自動分析。</li>
+        </ol>
+        <p><b>如果以上做到仍覺得「我會做，但不知道怎麼把金融分析變成完整系統」</b>，再買 Agent 課比較合理；如果連第一、二步都常卡住，AI Coding 類課程比較能省時間。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="notes">
+    <div class="section-head"><div><h3>我的學習筆記</h3><p>把卡住的地方、可用在工作的想法、想做的 prototype 都丟在這裡。</p></div></div>
+    <textarea id="notesBox" placeholder="例如：\n- 公司新聞 API 可以對應 Agent 的新聞工具\n- 法說逐字稿要先做 JSON schema\n- 下一步：做 TSMC 事件分析 demo"></textarea>
+    <div class="savehint" id="noteHint">自動儲存於此瀏覽器。</div>
+  </section>
+
+  <div class="footer">
+    本頁為自學用資源整理，不隸屬 Hahow、Code Gym、Anthropic、SEC、FinMind、FRED 或其他來源。課程結構僅參考公開宣傳頁所揭露的能力範圍並重新設計，不包含或重製任何付費課程內容。金融內容僅供教育，不構成投資建議。
+  </div>
+</main>
+</div>
+<script>
+const lessons = [
+{
+ id:'c1', track:'coding', n:'C1', title:'Claude Code：從需求到第一個可執行專案', time:'45–90 分', level:'必修',
+ desc:'先不要學一堆語法。先學會讓 AI 在你的專案資料夾裡規劃、建檔、修改、測試。',
+ outcomes:['安裝並啟動 Claude Code','理解 Plan / Permission / 檔案修改的基本流程','用自然語言做出第一個本機工具'],
+ resources:[
+  ['Anthropic｜Claude Code Quickstart','官方安裝與第一次使用','https://code.claude.com/docs/en/quickstart','官方'],
+  ['Anthropic｜Claude Code in Action','官方免費完整課程','https://anthropic.skilljar.com/claude-code-in-action','免費課'],
+  ['freeCodeCamp｜Claude Code for Beginners','4+ 小時免費實戰影片','https://www.youtube.com/watch?v=gh2_PhgZGsM','影片'],
+  ['Kevin Stratvert｜Non-Coder Tutorial','非工程背景的快速入門','https://www.youtube.com/watch?v=inxAjCRHe2o','影片']
+ ],
+ task:'建立一個「工作需求拆解器」：輸入需求後，輸出目標、使用者故事、驗收條件與風險。先只做 HTML + JS，不接資料庫。',
+ prompt:'我要練習 AI Coding。請先進入 Plan mode，不要直接改檔。幫我規劃一個單頁「工作需求拆解器」，使用原生 HTML/CSS/JavaScript。功能：輸入一段需求，按下按鈕後依固定模板顯示目標、User Story、Acceptance Criteria、風險。先列檔案結構、實作步驟、驗收方式，再等我確認。'
+},
+{
+ id:'c2', track:'coding', n:'C2', title:'Web 基礎：看懂 AI 寫的 HTML、CSS、JavaScript', time:'2–3 小時', level:'基礎',
+ desc:'你不需要先變工程師，但至少要能判斷 AI 改了哪裡、錯在哪裡、DOM 與事件怎麼串。',
+ outcomes:['看懂 HTML 結構','知道 CSS 負責什麼','知道 JavaScript 怎麼接按鈕、表單與 API'],
+ resources:[
+  ['MDN｜Web 開發學習區','HTML / CSS / JS 官方教學入口','https://developer.mozilla.org/zh-TW/docs/Learn_web_development','官方'],
+  ['MDN｜什麼是 JavaScript','繁中 JavaScript 入門','https://developer.mozilla.org/zh-TW/docs/Learn_web_development/Core/Scripting/What_is_JavaScript','官方'],
+  ['MDN｜JavaScript 指南','語法與核心概念','https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide','官方']
+ ],
+ task:'把 C1 工具加上：表單驗證、錯誤提示、結果收合區，以及手機版版面。',
+ prompt:'請用教學模式協助我修改現有 HTML。每次只改一個功能，改完要說明：1. 改了哪個檔案 2. 這段 JavaScript 在做什麼 3. 我要如何手動測試。不要一次重寫全部。'
+},
+{
+ id:'c3', track:'coding', n:'C3', title:'Git / GitHub：讓 AI 改壞時你救得回來', time:'60–90 分', level:'必修',
+ desc:'AI Coding 最重要的安全網之一不是更好的 prompt，而是版本控制。',
+ outcomes:['建立 repository','會 commit / branch / pull request 的概念','知道怎麼回到上一個可用版本'],
+ resources:[
+  ['GitHub｜Hello World','不用程式背景也能完成的官方 GitHub 入門','https://docs.github.com/en/get-started/using-github/hello-world','官方'],
+  ['Claude Code｜Best Practices','官方工作流與安全實務','https://code.claude.com/docs/en/best-practices','官方']
+ ],
+ task:'把前兩堂的專案放進 GitHub；完成至少 3 次有意義的 commit。',
+ prompt:'請先檢查目前專案是否已初始化 Git。若沒有，逐步帶我完成。之後請替我建議「最小且有意義」的 commit 切法，不要把所有變更塞成一個 commit。'
+},
+{
+ id:'c4', track:'coding', n:'C4', title:'Full-stack：用 Next.js 把「頁面」變「產品」', time:'3–5 小時', level:'核心',
+ desc:'學 routing、server/client、資料取得與 API route 的概念；不追求背語法。',
+ outcomes:['理解前端與後端責任','建立多頁 app','能從 server 取得資料並顯示'],
+ resources:[
+  ['Next.js Learn','官方免費 16 章互動課程','https://nextjs.org/learn','官方'],
+  ['Next.js Dashboard Course','用完整 dashboard 專案學 full-stack','https://nextjs.org/learn/dashboard-app','免費課']
+ ],
+ task:'把你的單頁工具改成 Next.js 專案，至少有首頁、分析頁、歷史紀錄頁。',
+ prompt:'我要把現有原生 HTML 專案遷移成 Next.js。先分析哪些功能應該是 Server Component、哪些需要 Client Component。請先提出最小遷移方案，不要一次導入太多套件。'
+},
+{
+ id:'c5', track:'coding', n:'C5', title:'資料庫 + 會員：Supabase 最小可用後端', time:'2–4 小時', level:'核心',
+ desc:'把使用者、分析紀錄、收藏清單真的存下來，並建立最基本的權限觀念。',
+ outcomes:['建立 Postgres table','接上登入 / Auth','理解 RLS 為什麼重要'],
+ resources:[
+  ['Supabase｜Getting Started','官方所有 quickstart 入口','https://supabase.com/docs/guides/getting-started','官方'],
+  ['Supabase + React Quickstart','資料表、查詢、RLS 實作','https://supabase.com/docs/guides/getting-started/quickstarts/reactjs','官方'],
+  ['Supabase Docs｜Auth / Database','後端能力總覽','https://supabase.com/docs','官方']
+ ],
+ task:'建立 users 對應 profile、analysis_history 兩張表，並讓登入者只能看到自己的分析紀錄。',
+ prompt:'請幫我設計 Supabase 的最小 schema：profile、analysis_history。先用表格列欄位、型別、用途、RLS 原則；我確認後再產 SQL。API key 與 service role key 不可以寫進前端程式。'
+},
+{
+ id:'c6', track:'coding', n:'C6', title:'API、環境變數與錯誤處理', time:'90–150 分', level:'必修',
+ desc:'學會「資料怎麼進產品」：HTTP、JSON、API key、rate limit、錯誤狀態。',
+ outcomes:['知道 GET / POST / JSON','把 secret 放環境變數','對 401 / 429 / 500 做基本處理'],
+ resources:[
+  ['MDN｜Web API 指南','瀏覽器與 HTTP/API 的基礎入口','https://developer.mozilla.org/en-US/docs/Web/API','官方'],
+  ['Supabase｜API Keys','key 與安全觀念','https://supabase.com/docs/guides/api/api-keys','官方']
+ ],
+ task:'串任一公開 API；畫面要顯示 loading、success、empty、error 四種狀態。',
+ prompt:'我要新增一個外部 API。請先幫我做風險檢查：API key 應放哪裡、能不能從瀏覽器直接打、是否有 rate limit、失敗時 UI 怎麼顯示。不要先寫程式。'
+},
+{
+ id:'c7', track:'coding', n:'C7', title:'AI 功能：把 LLM 接進自己的產品', time:'2–3 小時', level:'進階',
+ desc:'從「聊天」進一步理解 streaming、structured output、tools 與 agent loop。',
+ outcomes:['做出 AI 回覆介面','知道 structured output 的用途','理解 tool calling / agent 基本概念'],
+ resources:[
+  ['Vercel AI SDK｜Getting Started','免費開源 SDK 的官方入門','https://ai-sdk.dev/docs/getting-started','官方'],
+  ['AI SDK｜Node.js Agent Quickstart','建立簡單 agent 與 streaming UI','https://ai-sdk.dev/docs/getting-started/nodejs','官方']
+ ],
+ task:'讓你的 app 將一段金融新聞輸出成固定 JSON：summary、event_type、affected_assets、watch_items。',
+ prompt:'請設計一個 structured output schema，用於金融新聞解析。要求輸出 summary、event_type、affected_assets、watch_items、evidence。先定義 schema 與驗證規則，再提供最小測試案例。'
+},
+{
+ id:'c8', track:'coding', n:'C8', title:'測試、除錯、部署：從「能跑」到「敢給別人用」', time:'2–4 小時', level:'核心',
+ desc:'AI 會寫錯，所以要學會讓它自己驗證，而不是只看畫面「好像可以」。',
+ outcomes:['寫基本測試','建立驗收 checklist','部署公開 demo'],
+ resources:[
+  ['Claude Code｜Best Practices','驗證、測試與工作流','https://code.claude.com/docs/en/best-practices','官方'],
+  ['Next.js Learn｜部署與完整應用','完成官方 full-stack 專案','https://nextjs.org/learn','官方']
+ ],
+ task:'為你的核心功能至少寫 3 個測試情境，並建立 README：功能、架構、資料源、限制、如何執行。',
+ prompt:'請不要新增功能。現在只做 release readiness review：列出 blocking bugs、security risks、missing error states、manual test checklist。每一項要有驗證方法。'
+},
+{
+ id:'a1', track:'agent', n:'A1', title:'Agent 起手式：Claude Code + 金融資料源', time:'2–3 小時', level:'核心',
+ desc:'先建立「AI 能自己讀資料、產報告」的最小工作環境，不急著做複雜 multi-agent。',
+ outcomes:['建立金融研究 project','知道工具與資料源是什麼','完成第一份來源可追溯的分析'],
+ resources:[
+  ['Claude Code Quickstart','Agent 工作環境','https://code.claude.com/docs/en/quickstart','官方'],
+  ['SEC EDGAR APIs','美股公司 filing / XBRL 免費 JSON API','https://www.sec.gov/search-filings/edgar-application-programming-interfaces','官方'],
+  ['FinMind Quick Start','台股資料 API 入門','https://finmind.github.io/en/quickstart/','官方']
+ ],
+ task:'選一家公司，建立 research/ 資料夾與 source log。至少抓一份原始資料，讓 AI 引用來源而不是只靠模型記憶。',
+ prompt:'你現在是 research agent。規則：所有數字必須附來源與資料日期；找不到資料就明確說找不到。先替我設計 research 資料夾結構，以及 source_log.md 應記錄哪些欄位。'
+},
+{
+ id:'a2', track:'agent', n:'A2', title:'Skills：把分析方法變成可重複的 AI 分析師', time:'90–150 分', level:'核心',
+ desc:'把一次成功的 prompt 升級成固定流程，讓每次分析都走同一套步驟與驗收規則。',
+ outcomes:['理解 Skill 的用途','建立第一個 SKILL.md','將輸出格式與驗證規則固化'],
+ resources:[
+  ['Claude｜Agent Skills Overview','官方 Skill 概念與格式','https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview','官方'],
+  ['Claude Code｜Skills','Claude Code 自訂 Skills','https://code.claude.com/docs/en/skills','官方'],
+  ['Anthropic Blog｜如何選 CLAUDE.md / Skills / Hooks / Subagents','官方決策框架','https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more','官方']
+ ],
+ task:'寫一個「事件分析 Skill」：輸入事件 → 事實摘要 → 可能機制 → 受影響資產 → 驗證資料 → 觀察指標。',
+ prompt:'請幫我設計一個 Claude Code Skill。這個 Skill 用於金融事件分析；必須區分「已查證事實」與「分析推論」，每個數字要附來源日期，最後一定輸出 watch_items。請先只產生 SKILL.md 架構與驗收 checklist。'
+},
+{
+ id:'a3', track:'agent', n:'A3', title:'公司研究 Agent：SEC 財報、8-K、10-Q、10-K', time:'3–5 小時', level:'核心',
+ desc:'不只摘要財報，而是學會從官方 filing 抓數字、比較期間、保留證據鏈。',
+ outcomes:['使用 companyfacts / submissions API','知道財務指標不能脫離 period/context','產出可追溯公司研究報告'],
+ resources:[
+  ['SEC｜EDGAR APIs','submissions + companyfacts + XBRL 官方說明','https://www.sec.gov/search-filings/edgar-application-programming-interfaces','官方'],
+  ['SEC｜Data & Research','SEC 開放資料入口','https://www.sec.gov/data-research','官方']
+ ],
+ task:'選 NVDA / AAPL / MSFT 任一公司，比較最近兩季 Revenue、Operating Income、Cash Flow，並附 filing date 與來源 URL。',
+ prompt:'先不要做投資建議。請從 SEC 原始 filing / XBRL 資料建立一份「兩季變化」報告。每個指標必須列：current period、prior period、YoY/QoQ（若適用）、source form、filing date、原始來源。若口徑不同要標記不可直接比較。'
+},
+{
+ id:'a4', track:'agent', n:'A4', title:'Memory / Knowledge：讓研究能累積，而不是每次歸零', time:'2–3 小時', level:'進階',
+ desc:'Agent 的「記憶」不是神奇地變聰明，而是把可重用的資訊、規則與過去結果存在可管理的地方。',
+ outcomes:['理解 CLAUDE.md 與 memory 的角色','建立公司知識檔案','設計可更新而非只追加的知識流程'],
+ resources:[
+  ['Claude Code｜Memory','官方 CLAUDE.md / memory 文件','https://code.claude.com/docs/en/memory','官方'],
+  ['Claude Blog｜Steering Claude Code','Skills、Rules、Memory 的差異','https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more','官方']
+ ],
+ task:'為單一公司建立 company_profile.md、thesis_log.md、event_history.md，並設定「何時更新、何時覆寫、何時保留歷史」。',
+ prompt:'請幫我設計研究記憶規則：哪些資訊是 stable facts、哪些是 time-sensitive、哪些是 analyst inference。我要避免舊結論污染新分析。請輸出檔案結構、更新規則與衝突處理原則。'
+},
+{
+ id:'a5', track:'agent', n:'A5', title:'自動監控：排程、Hooks、通知與人審', time:'2–4 小時', level:'進階',
+ desc:'把「我想到才問 AI」變成「符合條件時才觸發」，並保留人審節點。',
+ outcomes:['理解 deterministic hook 與 agent 判斷的差異','建立監控條件','設計避免濫發通知的門檻'],
+ resources:[
+  ['Claude Code｜Hooks Guide','生命週期 hooks 與自動化','https://code.claude.com/docs/en/hooks-guide','官方'],
+  ['Claude Code｜Power User Tips','包含排程、loop、MCP 等模式','https://support.claude.com/en/articles/14554000-claude-code-power-user-tips','官方'],
+  ['GitHub Actions Docs','免費額度可做簡單排程工作流','https://docs.github.com/en/actions','官方']
+ ],
+ task:'建立一個每日一次的 watchlist 檢查規格：只在條件跨越門檻時產生 alert；alert 必須帶上觸發原因、資料時間與來源。',
+ prompt:'請設計「低噪音金融監控」規則。不要每次都通知；只有狀態從未觸發→觸發，或關鍵數值超過門檻時才通知。列出 state、threshold、cooldown、evidence、human review 欄位。'
+},
+{
+ id:'a6', track:'agent', n:'A6', title:'台股資料：FinMind 籌碼與市場資料', time:'2–4 小時', level:'核心',
+ desc:'用公開 API 練習台股價格、法人、融資融券等資料的取得與基本驗證。',
+ outcomes:['呼叫 FinMind API','理解 data_id 與日期範圍','讓 Agent 先驗證數據再敘事'],
+ resources:[
+  ['FinMind｜Quick Start','API、token、資料集入門','https://finmind.github.io/en/quickstart/','官方'],
+  ['FinMind Documentation','完整台股資料集文件','https://finmind.github.io/','官方']
+ ],
+ task:'選一檔台股，抓 20 個交易日的價格與任一籌碼資料，要求 AI 只做描述性分析，不先下買賣結論。',
+ prompt:'請先做資料品質檢查：缺值、日期對齊、單位、交易日、資料更新時間。確認通過後，再描述近 20 日價格與籌碼的共同變化；不得把相關性寫成因果。'
+},
+{
+ id:'a7', track:'agent', n:'A7', title:'總經與新聞脈絡：FRED + GDELT', time:'2–4 小時', level:'進階',
+ desc:'把 CPI、利率、就業等結構化數據，和新聞事件放在同一條時間軸，不要只讀 headline。',
+ outcomes:['查 FRED series','理解 release / observation date','把新聞與總經資料分開處理再整合'],
+ resources:[
+  ['FRED API Overview','美國總經官方 API','https://fred.stlouisfed.org/docs/api/fred/overview.html','官方'],
+  ['FRED Releases','資料發布與 series 入口','https://fred.stlouisfed.org/docs/api/fred/releases.html','官方'],
+  ['GDELT Data & APIs','全球新聞資料與 JSON API','https://gdeltproject.org/data.html','免費資源']
+ ],
+ task:'建立「總經事件卡」：選 CPI / Fed Funds / Unemployment 任一指標，記錄最新值、前值、發布日，再整理同日重大新聞。',
+ prompt:'請把總經資料與新聞分成兩層：Data layer 只能寫官方數據；Narrative layer 才整理新聞與市場解讀。最後增加「哪些是事實、哪些是推論、下一個驗證點是什麼」。'
+},
+{
+ id:'a8', track:'agent', n:'A8', title:'ETF 穿透：持股、集中度、重疊度與真實曝險', time:'2–4 小時', level:'進階',
+ desc:'ETF 不是看名稱就知道曝險。先拿官方 holdings，再算權重與重疊。',
+ outcomes:['整理 ETF holdings','計算 Top 10 集中度','比較兩檔 ETF 重疊持股'],
+ resources:[
+  ['iShares ETF Holdings','發行商官方 ETF 資料入口','https://www.ishares.com/us/products/etf-investments','官方'],
+  ['Vanguard ETFs','發行商官方 ETF 資料入口','https://investor.vanguard.com/investment-products/list/etfs','官方'],
+  ['FRED API','把利率/通膨資料接到曝險解讀','https://fred.stlouisfed.org/docs/api/fred/overview.html','官方']
+ ],
+ task:'挑兩檔 ETF：整理 Top 10、前十大集中度、共同持股與簡單 overlap ratio；再用一個總經指標說明可能的傳導機制。',
+ prompt:'請先把 ETF 分析拆成 deterministic calculation 與 narrative interpretation。集中度、重疊度一定要由程式計算；AI 只負責解釋，不可自行猜數字。'
+},
+{
+ id:'p1', track:'capstone', n:'P1', title:'Capstone 1：Financial Intelligence Agent 架構設計', time:'2–3 小時', level:'作品集',
+ desc:'把學到的東西收斂成一個產品，而不是八個彼此分散的 demo。',
+ outcomes:['定義單一使用情境','畫出 tools / data / memory / report 流程','決定 MVP 不做什麼'],
+ resources:[
+  ['Claude Blog｜Agent 組件選擇','Skills / Hooks / Subagents 的官方框架','https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more','官方'],
+  ['Claude Code｜MCP','需要串外部工具時的官方入口','https://code.claude.com/docs/en/mcp','官方']
+ ],
+ task:'定義 MVP：輸入一家公司或事件 → 新聞 / 財報 / 市場資料 → 來源驗證 → 事件解讀 → watchlist → HTML 報告。',
+ prompt:'你是產品架構師。請替 Financial Intelligence Agent 做 MVP decomposition。每個模組要列 input、tool/data source、output、failure mode、human review。限制：兩週可完成、先支援 1 個市場與 1 種報告格式。'
+},
+{
+ id:'p2', track:'capstone', n:'P2', title:'Capstone 2：做出可展示的 MVP', time:'6–10 小時', level:'作品集',
+ desc:'用你最熟的股票或事件做端到端 demo，能重跑、能驗證、能展示。',
+ outcomes:['完成端到端流程','保存分析紀錄','輸出一頁式報告'],
+ resources:[
+  ['Next.js Learn','產品 UI 與 full-stack','https://nextjs.org/learn','官方'],
+  ['Supabase Docs','紀錄、會員、資料庫','https://supabase.com/docs','官方'],
+  ['SEC / FinMind / FRED','至少選一個金融資料源','https://www.sec.gov/search-filings/edgar-application-programming-interfaces','官方']
+ ],
+ task:'完成 MVP，README 至少包含：Problem、User、Demo flow、Architecture、Data sources、Guardrails、Known limitations、Next step。',
+ prompt:'現在不要幫我加新功能。請用面試官角度 review 我的 Financial Intelligence Agent：它解決什麼問題、哪裡只是 demo、資料可信度、Agent 真正做了什麼、哪些地方仍需工程化。請把缺口排 P0/P1/P2。'
+}
+];
+
+function badgeType(label){ if(label==='官方') return 'official'; if(label==='免費課') return 'free'; if(label==='影片') return 'video'; return 'free'; }
+function renderLessons(filter='all'){
+ const grid=document.getElementById('lessonGrid');
+ const q=document.getElementById('search').value.trim().toLowerCase();
+ const filtered=lessons.filter(l => (filter==='all'||l.track===filter) && (!q || [l.title,l.desc,l.level,...l.outcomes,...l.resources.flat()].join(' ').toLowerCase().includes(q)));
+ grid.innerHTML=filtered.map(l=>`
+  <article class="lesson" data-track="${l.track}" data-id="${l.id}">
+   <div class="lesson-top" onclick="toggleLesson('${l.id}',event)">
+    <div class="num">${l.n}</div>
+    <div><h4>${l.title}</h4><div class="sub">${l.desc}</div><div class="badge-row"><span class="badge">${l.time}</span><span class="badge">${l.level}</span><span class="badge ${l.track==='agent'?'official':'free'}">${l.track==='coding'?'AI Coding':l.track==='agent'?'Financial Agent':'Capstone'}</span></div></div>
+    <input class="check" type="checkbox" ${isDone(l.id)?'checked':''} onclick="markDone('${l.id}',this.checked,event)" aria-label="完成 ${l.title}" />
+   </div>
+   <div class="lesson-body">
+    <div class="body-block"><h5>這堂要會什麼</h5><ul>${l.outcomes.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="body-block"><h5>免費教材</h5><div class="resources">${l.resources.map(r=>`<a class="resource" href="${r[2]}" target="_blank" rel="noopener"><span><b>${r[0]}</b><small>${r[1]}</small></span><em>${r[3]}</em></a>`).join('')}</div></div>
+    <div class="body-block"><h5>實作作業</h5><p>${l.task}</p></div>
+    <div class="body-block"><h5>丟給 Claude Code 的練習提示</h5><div class="prompt"><button class="copy" onclick="copyPrompt('${l.id}',event)">複製</button><span id="prompt-${l.id}">${escapeHtml(l.prompt)}</span></div></div>
+   </div>
+  </article>`).join('') || '<div class="panel"><b>找不到相符課程</b><p>換個關鍵字，例如：SEC、Skills、Supabase、ETF。</p></div>';
+ document.getElementById('lessonCount').textContent=lessons.length;
+}
+function escapeHtml(s){ return s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+function toggleLesson(id,e){ if(e.target.classList.contains('check')) return; const el=document.querySelector(`[data-id="${id}"]`); el.classList.toggle('open'); }
+function state(){ try{return JSON.parse(localStorage.getItem('aiFreeCourseDone')||'{}')}catch(e){return{}} }
+function isDone(id){ return !!state()[id]; }
+function markDone(id,val,e){e.stopPropagation();const s=state();s[id]=val;localStorage.setItem('aiFreeCourseDone',JSON.stringify(s));updateProgress();}
+function updateProgress(){const s=state();const done=lessons.filter(l=>s[l.id]).length;const pct=Math.round(done/lessons.length*100);document.getElementById('progressBar').style.width=pct+'%';document.getElementById('progressText').textContent=pct+'%';}
+function resetProgress(){ if(confirm('確定要清除全部完成進度？')){localStorage.removeItem('aiFreeCourseDone');renderLessons(currentFilter);updateProgress();}}
+async function copyPrompt(id,e){e.stopPropagation();const l=lessons.find(x=>x.id===id);await navigator.clipboard.writeText(l.prompt);e.target.textContent='已複製';setTimeout(()=>e.target.textContent='複製',1000);}
+let currentFilter='all';
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.dataset.tab;renderLessons(currentFilter);}));
+document.querySelectorAll('.navbtn[data-filter]').forEach(b=>b.addEventListener('click',()=>{currentFilter=b.dataset.filter;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===currentFilter));renderLessons(currentFilter);document.getElementById('courses').scrollIntoView();}));
+document.querySelectorAll('.navbtn[data-scroll]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.scroll).scrollIntoView()));
+document.getElementById('search').addEventListener('input',()=>renderLessons(currentFilter));
+const notes=document.getElementById('notesBox');notes.value=localStorage.getItem('aiFreeCourseNotes')||'';let t;notes.addEventListener('input',()=>{clearTimeout(t);document.getElementById('noteHint').textContent='儲存中…';t=setTimeout(()=>{localStorage.setItem('aiFreeCourseNotes',notes.value);document.getElementById('noteHint').textContent='已自動儲存於此瀏覽器。';},300)});
+renderLessons();updateProgress();
+</script>
+</body>
+</html>
